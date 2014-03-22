@@ -23,7 +23,6 @@ group :test do
   gem 'bazaar'
   gem 'ffaker'
   gem 'factory_girl'
-  gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'webmock', '1.17.3'
@@ -33,6 +32,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-debugger'
+  gem 'rspec-rails'
   gem 'teaspoon'
 end
 
