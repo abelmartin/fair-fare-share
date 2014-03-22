@@ -4,10 +4,16 @@ ruby '2.1.0'
 gem 'rails', '4.0.4'
 gem 'pg'
 
+# gem 'devise', '3.2.2'
+# gem 'protected_attributes'
+gem 'haml', '4.0.5'
+gem 'haml-rails', "0.5.3"
+
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
+
 
 group :development do
   gem 'quiet_assets'
@@ -20,7 +26,7 @@ group :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'capybara'
-  gem 'webmock', "1.17.3"
+  gem 'webmock', '1.17.3'
 end
 
 group :development, :test do
