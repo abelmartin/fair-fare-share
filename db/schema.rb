@@ -11,15 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140322040523) do
+ActiveRecord::Schema.define(version: 20140322062520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "locations", force: true do |t|
+    t.integer  "user_id"
+    t.string   "address",                     null: false
+    t.string   "gmap_url"
+    t.string   "coordinates"
+    t.boolean  "primary",     default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations", ["user_id"], name: "index_locations_on_user_id", using: :btree
+
   create_table "users", force: true do |t|
-    t.string "first_name", limit: 16
-    t.string "last_name",  limit: 16
-    t.string "email",      limit: 64
+    t.string   "first_name", limit: 16
+    t.string   "last_name",  limit: 16
+    t.string   "email",      limit: 64
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

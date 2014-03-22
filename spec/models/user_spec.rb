@@ -6,6 +6,6 @@ describe User do
   it {should respond_to :email}
 
   describe 'associations' do
-    it {should have_many :trips}
+    it {should have_many :locations}
   end
 end
