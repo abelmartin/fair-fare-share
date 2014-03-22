@@ -1,0 +1,13 @@
+development:
+  adapter: postgresql
+  host: localhost
+  database: ffs_dev
+  username: root
+  password: awesome_root_password
+
+test:
+  adapter: postgresql
+  host: localhost
+  database: ffs_test
+  username: root
+  password: awesome_root_password
