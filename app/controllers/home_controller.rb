@@ -7,6 +7,7 @@ class HomeController < ApplicationController
     gmap_string += "&origin=#{params[:origin]}"
     gmap_string += "&waypoints=#{legs}" if legs.present?
     gmap_string += "&destination=#{dest}"
+    gmap_string += "&key=AIzaSyDupZ5WuFO8u8vRuDscjT-dQd2ju_YbwEQ"
 
     puts URI::encode(gmap_string)
     resp = HTTParty.get( URI::encode(gmap_string) )

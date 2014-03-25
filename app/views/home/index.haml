@@ -1,4 +1,4 @@
-%h1 FFS
+%h1 Fare Fair Share
 
 :scss
   input[type='text'], label, .distance{
@@ -13,7 +13,8 @@
 %form#ffs
   %p
     %label Starting Location
-    %input#origin{type: 'text', name: 'origin', value: '4134 crescent st 11101'}
+    %input#origin{type: 'text', name: 'origin', value: '1123 Broadway 10010'}
+    ex: Hill Country
   %p
     %label Final Fare
     %input#finalFare{type: 'text', name: 'fare', value: '81.90'}
@@ -22,17 +23,20 @@
 
   %p.waypoint_0
     %label Stop 1
-    %input{type: 'text', name: 'waypoints[]', value: '3064 34th st 11103'}
+    %input{type: 'text', name: 'waypoints[]', value: '64 Greenwich Ave 10011'}
+    ex: The Meatball Shop
     %span.distance (mile: xxx, %: yyy, $: zzz)
 
   %p.waypoint_1
     %label Stop 2
-    %input{type: 'text', name: 'waypoints[]', value: '62-29 Roosevelt Ave 11377'}
+    %input{type: 'text', name: 'waypoints[]', value: '700 W 125th St 10027'}
+    ex: Dinosaur BBQ
     %span.distance (mile: xxx, %: yyy, $: zzz)
 
   %p.waypoint_2
     %label Stop 3
-    %input{type: 'text', name: 'waypoints[]', value: '59-40 55th Rd 11378'}
+    %input{type: 'text', name: 'waypoints[]', value: '230 Varick St 10014'}
+    ex: Dinosaur IHOP
     %span.distance (mile: xxx, %: yyy, $: zzz)
 
   %button#getShares Get Fair Share
