@@ -5,7 +5,9 @@ $ ->
   $('#getShares').click (e) ->
     e.preventDefault()
 
-    $.post '/home/getShares', $('#ffs').serialize(), (data) ->
+    # $.get '/home/verifyWaypoint?'
+
+    $.get "/home/getShares?#{$('#ffs').serialize()}", (data) ->
       console.log(data)
       $('span.distance').each (idx, elm) ->
         $(elm).html( "(mile: #{data[idx].miles} | %: #{data[idx].percent} | $: #{data[idx].share})" )

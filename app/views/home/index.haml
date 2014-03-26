@@ -11,32 +11,33 @@
   .distance{width: 250px; }
 
 %form#ffs
-  %p
+  %p.waypoint
     %label Starting Location
     %input#origin{type: 'text', name: 'origin', value: '1123 Broadway 10010'}
-    ex: Hill Country
+    %span.status ex: Hill Country
+
   %p
     %label Final Fare
     %input#finalFare{type: 'text', name: 'fare', value: '81.90'}
 
   %hr
 
-  %p.waypoint_0
+  %p.waypoint
     %label Stop 1
     %input{type: 'text', name: 'waypoints[]', value: '64 Greenwich Ave 10011'}
-    ex: The Meatball Shop
+    %span.status ex: The Meatball Shop
     %span.distance (mile: xxx, %: yyy, $: zzz)
 
-  %p.waypoint_1
+  %p.waypoint
     %label Stop 2
     %input{type: 'text', name: 'waypoints[]', value: '700 W 125th St 10027'}
-    ex: Dinosaur BBQ
+    %span.status ex: Dinosaur BBQ
     %span.distance (mile: xxx, %: yyy, $: zzz)
 
-  %p.waypoint_2
+  %p.waypoint
     %label Stop 3
     %input{type: 'text', name: 'waypoints[]', value: '230 Varick St 10014'}
-    ex: Dinosaur IHOP
+    %span.status ex: Dinosaur IHOP
     %span.distance (mile: xxx, %: yyy, $: zzz)
 
   %button#getShares Get Fair Share
