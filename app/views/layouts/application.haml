@@ -1,9 +1,13 @@
 !!!5
 %head
   %title FFS
-  = stylesheet_link_tag    "application", media: "all"
-  = javascript_include_tag "application"
+  = stylesheet_link_tag "application", media: "all"
   = csrf_meta_tags
 
 %body
   = yield
+  = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js'
+  = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'
+  = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js'
+  = javascript_include_tag '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false'
+  = javascript_include_tag 'home'

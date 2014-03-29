@@ -1,20 +1,11 @@
 %h1 Fare Fair Share
 
-:scss
-  input[type='text'], label, .distance{
-    display: inline-block;
-    margin-left: 15px;
-  }
+#loading
+  %h2 Loading
+  %img{src: 'loader.gif'}
 
-  label{ width: 120px; }
-  input[type='text']{ width: 150px; }
-  .distance{width: 250px; }
-
-%form#ffs
-  %p.waypoint
-    %label Starting Location
-    %input#origin{type: 'text', name: 'origin', value: '1123 Broadway 10010'}
-    %span.status ex: Hill Country
+#ready
+  %ul#origin
 
   %p
     %label Final Fare
@@ -22,22 +13,14 @@
 
   %hr
 
-  %p.waypoint
-    %label Stop 1
-    %input{type: 'text', name: 'waypoints[]', value: '64 Greenwich Ave 10011'}
-    %span.status ex: The Meatball Shop
-    %span.distance (mile: xxx, %: yyy, $: zzz)
+  %ul#waypoints
 
-  %p.waypoint
-    %label Stop 2
-    %input{type: 'text', name: 'waypoints[]', value: '700 W 125th St 10027'}
-    %span.status ex: Dinosaur BBQ
-    %span.distance (mile: xxx, %: yyy, $: zzz)
+  #buttons
+    %button#addWaypoint Add Waypoint
+    %button#calculateShares Get Fair Share
 
-  %p.waypoint
-    %label Stop 3
-    %input{type: 'text', name: 'waypoints[]', value: '230 Varick St 10014'}
-    %span.status ex: Dinosaur IHOP
-    %span.distance (mile: xxx, %: yyy, $: zzz)
-
-  %button#getShares Get Fair Share
+%script#tmpWaypoint{type: 'txt/template'}
+  %button.getCurrentLocation (+)
+  %span.results ({{mileage}} miles, {{percentage}}%, ${{fareShare}})
+  %button.removeWaypoint Remove
+  %input.address{type: 'text', value: '{{address}}'}
