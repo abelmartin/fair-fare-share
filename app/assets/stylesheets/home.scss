@@ -1,0 +1,34 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  width: 360px;
+}
+
+input[type='text']{
+  display: block;
+  width: 90%;
+}
+
+.found{
+  background-color: #BFB;
+  border: solid 2px #0B0;
+}
+
+.not_found{
+  background-color: #FBB;
+  border: solid 2px #B00;
+}
+
+ul { padding: 0; }
+li { margin-top: 15px;}
+
+#origin {
+  .results, .removeWaypoint{ display: none; }
+}
+
+.getCurrentLocation.off { display: none; }
+
+#loading { text-align: center; }
+#ready { display: none; }
