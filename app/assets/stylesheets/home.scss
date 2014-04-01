@@ -2,27 +2,39 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-body {
-  width: 360px;
+html {
+  font-size: 2em;
+  text-align: center;
+  width: 100%;
 }
 
-input[type='text']{
+input[type='text'] {
   display: block;
+  font-size: 1em;
+  margin: 0 auto;
   width: 90%;
 }
 
-.found{
+hr { width: 90%; }
+
+button {
+  font-size: .75em;
+}
+
+h1 { text-align: left; }
+
+.found {
   background-color: #BFB;
   border: solid 2px #0B0;
 }
 
-.not_found{
+.not_found {
   background-color: #FBB;
   border: solid 2px #B00;
 }
 
 ul { padding: 0; }
-li { margin-top: 15px;}
+li { margin-top: 1.25em;}
 
 #origin {
   .results, .removeWaypoint{ display: none; }
@@ -31,4 +43,13 @@ li { margin-top: 15px;}
 .getCurrentLocation.off { display: none; }
 
 #loading { text-align: center; }
-#ready { display: none; }
+#ready {
+  display: none;
+  margin: 0 auto;
+  text-align: left;
+}
+
+#buttons {
+  margin: 0 auto;
+  width: 90%;
+}

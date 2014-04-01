@@ -20,10 +20,13 @@ _.templateSettings = {
   model: Waypoint
 
 @waypoints = new Waypoints()
+
 @waypoints.on 'add', (waypoint) ->
   waypoints.each (point) -> point.set({destination: false}, {silent: true})
   waypoint.set({destination: true}, {silent: true})
+
 @waypoints.on 'remove', (waypoint) ->
+  waypoints.each (point) -> point.set({destination: false}, {silent: true})
   lastPoint = waypoints.last()
   lastPoint.set({destination: true}, {silent: true}) unless lastPoint.get('origin')
 
@@ -36,6 +39,8 @@ _.templateSettings = {
 
   initialize: ->
     @directionsService = new google.maps.DirectionsService()
+    # @listentTo window.waypoints, 'add', @calculateShares
+    # @listentTo window.waypoints, 'remove', @calculateShares
 
   addWaypoint: ->
     console.log '#addWaypoint'
@@ -110,10 +115,22 @@ _.templateSettings = {
   getCurrentLocation: ->
     console.log '#getCurrentLocation'
     self = @
-    navigator.geolocation.getCurrentPosition (coordResponse) ->
+
+    geoOptions =
+      enableHighAccuracy: false
+      timeout: 5000
+      maximumAge: 30000
+
+    geoFail = (err) ->
+      console.log err
+      alert err.message
+
+    geoSucess = (coordResponse) ->
       console.log coordResponse
       self.model.set
         addressLatLng: new google.maps.LatLng(coordResponse.coords.latitude, coordResponse.coords.longitude)
+
+    navigator.geolocation.getCurrentPosition geoSucess, geoFail, geoOptions
 
   blurAddressUpdate: ->
     console.log '#blurAddressUpdate'
