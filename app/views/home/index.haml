@@ -1,8 +1,9 @@
+#alert.not_found
 %h1 Fare Fair Share
 
 #loading
   %h2 Loading
-  %img{src: 'loader.gif'}
+  %img{src: 'app_loader.gif'}
 
 #ready
   %ul#origin
@@ -16,11 +17,12 @@
   %ul#waypoints
 
   #buttons
-    %button#addWaypoint Add Waypoint
+    %button#addWaypoint Add Cab Stop
     %button#calculateShares Get Fair Share
 
 %script#tmpWaypoint{type: 'txt/template'}
   %button.getCurrentLocation (+)
   %span.results ({{mileage}} miles, {{percentage}}%, ${{fareShare}})
   %button.removeWaypoint Remove
+  %img.loader{src: 'waypoint_loader.gif'}
   %input.address{type: 'text', value: '{{address}}'}

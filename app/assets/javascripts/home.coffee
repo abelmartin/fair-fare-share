@@ -3,6 +3,22 @@ _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
 };
 
+@Toaster = Backbone.View.extend
+  el: '#alert'
+
+  initialize: (options) ->
+    @model = new Backbone.Model({message: 'Please Choose 2 Or More Cab Stops'})
+    @listenTo( @model, 'change:message', @render )
+
+  render: ->
+    self = @
+    @$el.html( @model.get('message') )
+
+    @$el.show()
+    setTimeout (-> self.$el.fadeOut()), 3000
+
+    return @
+
 @Waypoint = Backbone.Model.extend
   defaults:
     address: ''
@@ -94,7 +110,7 @@ _.templateSettings = {
   events:
     'click .removeWaypoint': 'remove'
     'click .getCurrentLocation': 'getCurrentLocation'
-    'blur .address' : 'blurAddressUpdate'
+    'keydown .address' : 'keydownAddressUpdate'
 
   initialize: (options = {}) ->
     @$parent = if options.parent? then options.parent else $('#waypoints')
@@ -123,7 +139,7 @@ _.templateSettings = {
 
     geoFail = (err) ->
       console.log err
-      alert err.message
+      window.toaster.model.set {message: err.message}
 
     geoSucess = (coordResponse) ->
       console.log coordResponse
@@ -132,9 +148,10 @@ _.templateSettings = {
 
     navigator.geolocation.getCurrentPosition geoSucess, geoFail, geoOptions
 
-  blurAddressUpdate: ->
+  keydownAddressUpdate: (e) ->
     console.log '#blurAddressUpdate'
-    @model.set({address: $('.address', @$el).val()})
+    if e.which == 13
+      @model.set({address: $('.address', @$el).val()})
 
   validateWaypoint: ->
     console.log '#validateWaypoint'
@@ -148,6 +165,7 @@ _.templateSettings = {
 
     @geocoder.geocode geoParam, (data, status) ->
       console.log data
+      $('img.loader', self.$el).show()
 
       foundLoc = _.find data, (result) ->
         result.types[0] == 'street_address'
@@ -160,8 +178,12 @@ _.templateSettings = {
           {address: foundLoc.formatted_address, addressLatLng: latLng},
           {silent: true}
         )
+      else
+        window.toaster.model.set {message: "Address Not Found: #{self.model.get('address')}"}
 
       $('.address', self.$el).val(self.model.get('address'))
+      $('img.loader', self.$el).hide()
+
       console.log self.model.attributes
 
   render: ->
@@ -177,6 +199,8 @@ _.templateSettings = {
       @$el.find('.getCurrentLocation').addClass('off')
 
     return @
+
+@toaster = new Toaster()
 
 @originView = new WaypointView
   parent: $('#origin')

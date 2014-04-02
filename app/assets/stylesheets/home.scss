@@ -42,6 +42,8 @@ li { margin-top: 1.25em;}
 
 .getCurrentLocation.off { display: none; }
 
+img.loader { display: none; }
+
 #loading { text-align: center; }
 #ready {
   display: none;
@@ -52,4 +54,11 @@ li { margin-top: 1.25em;}
 #buttons {
   margin: 0 auto;
   width: 90%;
+}
+
+#alert {
+  display: none;
+  padding: 5px;
+  position: fixed;
+  right: 5px;
 }
