@@ -3,6 +3,7 @@ ruby '2.1.0'
 
 gem 'rails', '4.0.4'
 gem 'pg'
+gem 'mysql2'
 
 # gem 'devise', '3.2.2'
 # gem 'protected_attributes'
