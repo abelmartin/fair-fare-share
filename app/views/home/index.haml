@@ -17,12 +17,12 @@
   %ul#waypoints
 
   #buttons
-    %button#addWaypoint Add Cab Stop
-    %button#calculateShares Get Fair Share
+    %button#calculateShares.fa.fa-usd Get Fair Share
+    %button#addWaypoint.fa.fa-plus-square Add Cab Stop
 
 %script#tmpWaypoint{type: 'txt/template'}
-  %button.getCurrentLocation (+)
+  %button.getCurrentLocation.fa.fa-compass Current Location
   %span.results ({{mileage}} miles, {{percentage}}%, ${{fareShare}})
-  %button.removeWaypoint Remove
   %img.loader{src: 'waypoint_loader.gif'}
   %input.address{type: 'text', value: '{{address}}'}
+  %button.removeWaypoint.fa.fa-trash-o Remove

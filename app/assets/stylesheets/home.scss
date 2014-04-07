@@ -4,24 +4,40 @@
 
 html {
   font-size: 2em;
+  // padding: 0 10px;
   text-align: center;
-  width: 100%;
+  // width: 100%;
+  width: 800px;
 }
 
 input[type='text'] {
-  display: block;
+  // display: block;
   font-size: 1em;
   margin: 0 auto;
-  width: 90%;
+  width: 100%;
 }
+
+body { padding: 0 30px;}
 
 hr { width: 90%; }
 
 button {
   font-size: .75em;
+  border: 1px solid gray;
+  padding: 15px;
 }
 
 h1 { text-align: left; }
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+li { margin-top: 1.25em;}
+
+.fa:before {
+  padding-right: 10px;
+}
 
 .found {
   background-color: #BFB;
@@ -33,14 +49,22 @@ h1 { text-align: left; }
   border: solid 2px #B00;
 }
 
-ul { padding: 0; }
-li { margin-top: 1.25em;}
-
 #origin {
   .results, .removeWaypoint{ display: none; }
 }
 
 .getCurrentLocation.off { display: none; }
+
+.removeWaypoint{
+  display: block;
+  background-color: #900;
+  margin: 0 auto;
+  width: 250px;
+}
+
+.getCurrentLocation {
+  background-color: orange;
+}
 
 img.loader { display: none; }
 
@@ -52,7 +76,7 @@ img.loader { display: none; }
 }
 
 #buttons {
-  margin: 0 auto;
+  margin: 0 auto 20px;
   width: 90%;
 }
 
@@ -61,4 +85,18 @@ img.loader { display: none; }
   padding: 5px;
   position: fixed;
   right: 5px;
+}
+
+#waypoints {
+  margin-bottom: 60px;
+}
+
+#calculateShares {
+  background-color: #090;
+  float: right;
+}
+
+#addWaypoint {
+  background-color: #009;
+  color: white;
 }
