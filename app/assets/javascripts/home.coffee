@@ -101,9 +101,7 @@ _.templateSettings = {
 
 
 @WaypointView = Backbone.View.extend
-  class: 'waypoint'
-
-  tagName: 'li'
+  className: 'waypoint'
 
   template: '#tmpWaypoint'
 

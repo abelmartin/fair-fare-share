@@ -1,24 +1,19 @@
-// Place all the styles related to the Home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+body { padding: 0 30px;}
 
 html {
   font-size: 2em;
-  // padding: 0 10px;
   text-align: center;
-  // width: 100%;
-  width: 800px;
 }
 
 input[type='text'] {
   // display: block;
-  font-size: 1em;
-  margin: 0 auto;
+  background-color: #fab;
+  border: 0;
+  margin: 0;
   width: 100%;
 }
 
-body { padding: 0 30px;}
-
+h1 { text-align: left; background-color: #FBF; }
 hr { width: 90%; }
 
 button {
@@ -27,13 +22,7 @@ button {
   padding: 15px;
 }
 
-h1 { text-align: left; }
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-li { margin-top: 1.25em;}
+.waypoint { margin-top: 1.25em;}
 
 .fa:before {
   padding-right: 10px;
@@ -47,10 +36,6 @@ li { margin-top: 1.25em;}
 .not_found {
   background-color: #FBB;
   border: solid 2px #B00;
-}
-
-#origin {
-  .results, .removeWaypoint{ display: none; }
 }
 
 .getCurrentLocation.off { display: none; }
@@ -68,8 +53,15 @@ li { margin-top: 1.25em;}
 
 img.loader { display: none; }
 
+#origin {
+  // background-color: blue;
+  .results, .removeWaypoint { display: none; }
+}
+
 #loading { text-align: center; }
+
 #ready {
+  background-color: grey;
   display: none;
   margin: 0 auto;
   text-align: left;
