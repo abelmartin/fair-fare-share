@@ -21,8 +21,10 @@
     %button#addWaypoint.fa.fa-plus-square Add Cab Stop
 
 %script#tmpWaypoint{type: 'txt/template'}
-  %button.getCurrentLocation.fa.fa-compass Current Location
   %span.results ({{mileage}} miles, {{percentage}}%, ${{fareShare}})
   %img.loader{src: 'waypoint_loader.gif'}
-  %input.address{type: 'text', value: '{{address}}'}
+
+  .addressInputControlls
+    %input.address{type: 'text', value: '{{address}}'}
+    %button.getCurrentLocation.fa.fa-compass
   %button.removeWaypoint.fa.fa-trash-o Remove

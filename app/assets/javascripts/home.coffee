@@ -1,9 +1,17 @@
-# Mustache style
+#Models should be responsible for communicating with the service model.
+
+# Mustache styled underscore templtes!
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
 };
 
-@Toaster = Backbone.View.extend
+### Classes ###
+class GoogleServices
+  constructor: ->
+    @geocoder = new google.maps.Geocoder()
+    @directionsService = new google.maps.DirectionsService()
+
+ToasterView = Backbone.View.extend
   el: '#alert'
 
   initialize: (options) ->
@@ -11,15 +19,14 @@ _.templateSettings = {
     @listenTo( @model, 'change:message', @render )
 
   render: ->
-    self = @
     @$el.html( @model.get('message') )
 
     @$el.show()
-    setTimeout (-> self.$el.fadeOut()), 3000
+    setTimeout (=> @$el.fadeOut()), 3000
 
     return @
 
-@Waypoint = Backbone.Model.extend
+Waypoint = Backbone.Model.extend
   defaults:
     address: ''
     addressLatLng: null
@@ -32,35 +39,36 @@ _.templateSettings = {
 
   parse: (data) -> console.log @mileage
 
-@Waypoints = Backbone.Collection.extend
+Waypoints = Backbone.Collection.extend
   model: Waypoint
 
-@waypoints = new Waypoints()
+  initialize: ->
+    @on 'add', (waypoint) ->
+      @each (point) -> point.set({destination: false}, {silent: true})
+      waypoint.set({destination: true}, {silent: true})
 
-@waypoints.on 'add', (waypoint) ->
-  waypoints.each (point) -> point.set({destination: false}, {silent: true})
-  waypoint.set({destination: true}, {silent: true})
+    @on 'remove', (waypoint) ->
+      @each (point) -> point.set({destination: false}, {silent: true})
+      lastPoint = waypoints.last()
+      lastPoint.set({destination: true}, {silent: true}) unless lastPoint.get('origin')
 
-@waypoints.on 'remove', (waypoint) ->
-  waypoints.each (point) -> point.set({destination: false}, {silent: true})
-  lastPoint = waypoints.last()
-  lastPoint.set({destination: true}, {silent: true}) unless lastPoint.get('origin')
 
-@PageControlView = Backbone.View.extend
+PageControlView = Backbone.View.extend
   el: '#buttons'
 
   events:
     'click #addWaypoint': 'addWaypoint'
     'click #calculateShares': 'calculateShares'
 
-  initialize: ->
-    @directionsService = new google.maps.DirectionsService()
-    # @listentTo window.waypoints, 'add', @calculateShares
-    # @listentTo window.waypoints, 'remove', @calculateShares
+  initialize: (options)->
+    @geocoder = options.googleServices.geocoder
+    # @listentTo waypoints, 'add', @calculateShares
+    # @listentTo waypoints, 'remove', @calculateShares
 
   addWaypoint: ->
     console.log '#addWaypoint'
-    new WaypointView()
+    new WaypointView
+      geocoder: @geocoder
 
   calculateShares: ->
     console.log '#calculateShares'
@@ -86,7 +94,7 @@ _.templateSettings = {
     console.log 'dirParams =>'
     console.log dirParams
 
-    @directionsService.route dirParams, (resp, status) ->
+    gs.route dirParams, (resp, status) ->
       console.log resp
       totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
 
@@ -100,20 +108,20 @@ _.templateSettings = {
         point.trigger('shareCalculated')
 
 
-@WaypointView = Backbone.View.extend
+WaypointView = Backbone.View.extend
   className: 'waypoint'
 
   template: '#tmpWaypoint'
 
   events:
-    'click .removeWaypoint': 'remove'
+    'click .removeWaypoint': 'removeView'
     'click .getCurrentLocation': 'getCurrentLocation'
     'keydown .address' : 'keydownAddressUpdate'
 
   initialize: (options = {}) ->
     @$parent = if options.parent? then options.parent else $('#waypoints')
 
-    @geocoder = new google.maps.Geocoder()
+    @geocoder = options.geocoder
     @model = new Waypoint(options.modelAttrs)
     waypoints.add @model
 
@@ -122,13 +130,16 @@ _.templateSettings = {
     @listenTo(@model, 'shareCalculated', @updateReport)
     @render()
 
+  removeView: ->
+    waypoints.remove(@model)
+    @remove()
+
   updateReport: ->
     newReport = _.template "({{mileage}} miles, {{percentage}}%, ${{fareShare}})", @model.attributes
     $('.results', @$el).html( newReport )
 
   getCurrentLocation: ->
     console.log '#getCurrentLocation'
-    self = @
 
     geoOptions =
       enableHighAccuracy: false
@@ -139,9 +150,9 @@ _.templateSettings = {
       console.log err
       window.toaster.model.set {message: err.message}
 
-    geoSucess = (coordResponse) ->
+    geoSucess = (coordResponse) =>
       console.log coordResponse
-      self.model.set
+      @model.set
         addressLatLng: new google.maps.LatLng(coordResponse.coords.latitude, coordResponse.coords.longitude)
 
     navigator.geolocation.getCurrentPosition geoSucess, geoFail, geoOptions
@@ -154,16 +165,14 @@ _.templateSettings = {
   validateWaypoint: ->
     console.log '#validateWaypoint'
 
-    self = @
-
     if @model.get('addressLatLng')? && @model.get('address') == ''
       geoParam = {location: @model.get('addressLatLng')}
     else
       geoParam = {address: @model.get('address')}
 
-    @geocoder.geocode geoParam, (data, status) ->
+    @geocoder.geocode geoParam, (data, status) =>
       console.log data
-      $('img.loader', self.$el).show()
+      $('img.loader', @$el).show()
 
       foundLoc = _.find data, (result) ->
         result.types[0] == 'street_address'
@@ -172,17 +181,17 @@ _.templateSettings = {
 
       if foundLoc?
         latLng = foundLoc.geometry.location
-        self.model.set(
+        @model.set(
           {address: foundLoc.formatted_address, addressLatLng: latLng},
           {silent: true}
         )
       else
-        window.toaster.model.set {message: "Address Not Found: #{self.model.get('address')}"}
+        toaster.model.set {message: "Address Not Found: #{@model.get('address')}"}
 
-      $('.address', self.$el).val(self.model.get('address'))
-      $('img.loader', self.$el).hide()
+      $('.address', @$el).val(@model.get('address'))
+      $('img.loader', @$el).hide()
 
-      console.log self.model.attributes
+      console.log @model.attributes
 
   render: ->
     if @model.get('origin')
@@ -198,16 +207,21 @@ _.templateSettings = {
 
     return @
 
-@toaster = new Toaster()
+### INSTANCE VARIABLES ###
+googleServices = new GoogleServices()
+waypoints = new Waypoints()
+@ffs =
+  waypoints: waypoints
 
-@originView = new WaypointView
+toaster = new ToasterView()
+originView = new WaypointView
   parent: $('#origin')
+  geocoder: googleServices.geocoder
   modelAttrs: {origin: true}
-
-@pageControlsView = new PageControlView
+pageControlsView = new PageControlView
   el: '#buttons'
+  googleServices: googleServices
 
-$ ->
-  $('#loading').hide()
-  $('#ready').show()
-
+### Everything's ready.  Let's show the form! ###
+$('#loading').hide()
+$('#ready').show()
