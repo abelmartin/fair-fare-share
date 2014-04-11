@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'simple_form'
 gem 'httparty'
+gem 'compass-rails'
 
 group :development do
   gem 'quiet_assets'

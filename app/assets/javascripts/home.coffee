@@ -210,8 +210,7 @@ WaypointView = Backbone.View.extend
 ### INSTANCE VARIABLES ###
 googleServices = new GoogleServices()
 waypoints = new Waypoints()
-@ffs =
-  waypoints: waypoints
+@ffs = { waypoints: waypoints }
 
 toaster = new ToasterView()
 originView = new WaypointView
