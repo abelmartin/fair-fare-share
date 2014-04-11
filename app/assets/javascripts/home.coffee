@@ -35,8 +35,6 @@ Waypoint = Backbone.Model.extend
     origin: false
     destination: false
 
-  parse: (data) -> console.log @mileage
-
 Waypoints = Backbone.Collection.extend
   model: Waypoint
 
@@ -63,12 +61,10 @@ PageControlView = Backbone.View.extend
     @directionsService = options.googleServices.directionsService
 
   addWaypoint: ->
-    console.log '#addWaypoint'
     new WaypointView
       geocoder: @geocoder
 
   calculateShares: ->
-    console.log '#calculateShares'
     totalKM = 0
     fareFare = $('#finalFare').val()
     origin = waypoints.find (waypoint) -> waypoint.get('origin') == true
@@ -76,9 +72,6 @@ PageControlView = Backbone.View.extend
 
     midpoints = waypoints.reject (rpoint) -> rpoint.get('origin') || rpoint.get('destination')
     legs = midpoints.map (mpoint) -> { location: mpoint.get('addressLatLng'), stopover: true }
-
-    console.log 'legs =>'
-    console.log legs
 
     dirParams =
       origin: origin.get('addressLatLng')
@@ -88,10 +81,7 @@ PageControlView = Backbone.View.extend
 
     dirParams.waypoints = legs if legs.length > 0
 
-    console.log dirParams
-
     @directionsService.route dirParams, (resp, status) ->
-      console.log resp
       totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
 
       _.each resp.routes[0].legs, (leg, idx) ->
@@ -135,31 +125,30 @@ WaypointView = Backbone.View.extend
     $('.results', @$el).html( newReport )
 
   getCurrentLocation: ->
-    console.log '#getCurrentLocation'
+    $('img.loader', @$el).show()
 
     geoOptions =
       enableHighAccuracy: false
       timeout: 5000
       maximumAge: 30000
 
-    geoFail = (err) ->
-      console.log err
+    geoFail = (err) =>
+      $('img.loader', @$el).hide()
       toaster.model.set {message: err.message}
 
     geoSucess = (coordResponse) =>
-      console.log coordResponse
+      $('img.loader', @$el).hide()
       @model.set
         addressLatLng: new google.maps.LatLng(coordResponse.coords.latitude, coordResponse.coords.longitude)
 
     navigator.geolocation.getCurrentPosition geoSucess, geoFail, geoOptions
 
   keydownAddressUpdate: (e) ->
-    console.log '#blurAddressUpdate'
     if e.which == 13
       @model.set({address: $('.address', @$el).val()})
 
   validateWaypoint: ->
-    console.log '#validateWaypoint'
+    $('img.loader', @$el).show()
 
     if @model.get('addressLatLng')? && @model.get('address') == ''
       geoParam = {location: @model.get('addressLatLng')}
@@ -167,13 +156,10 @@ WaypointView = Backbone.View.extend
       geoParam = {address: @model.get('address')}
 
     @geocoder.geocode geoParam, (data, status) =>
-      console.log data
       $('img.loader', @$el).show()
 
       foundLoc = _.find data, (result) ->
         result.types[0] == 'street_address'
-
-      console.log foundLoc
 
       if foundLoc?
         latLng = foundLoc.geometry.location
@@ -186,8 +172,6 @@ WaypointView = Backbone.View.extend
 
       $('.address', @$el).val(@model.get('address'))
       $('img.loader', @$el).hide()
-
-      console.log @model.attributes
 
   render: ->
     if @model.get('origin')
