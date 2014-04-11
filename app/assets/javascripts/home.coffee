@@ -1,5 +1,3 @@
-#Models should be responsible for communicating with the service model.
-
 # Mustache styled underscore templtes!
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
@@ -146,7 +144,7 @@ WaypointView = Backbone.View.extend
 
     geoFail = (err) ->
       console.log err
-      window.toaster.model.set {message: err.message}
+      toaster.model.set {message: err.message}
 
     geoSucess = (coordResponse) =>
       console.log coordResponse
