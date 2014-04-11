@@ -1,5 +1,5 @@
 $siteSpacing: 30px;
-$inputWidth: 90%;
+$inputWidth: 80%;
 
 @import "compass/css3";
 @import "compass/utilities";
@@ -22,8 +22,6 @@ h1 {
   text-align: left;
   margin-left: $siteSpacing;
 }
-
-hr { width: $inputWidth; }
 
 button {
   @include border-radius(25px);
@@ -64,14 +62,16 @@ label {
 
 .getCurrentLocation.off { display: none; }
 
-.removeWaypoint{
+button.removeWaypoint{
   background-color: #900;
+  color: white;
+  font-weight: bold;
   margin: 10px auto 0;
-  width: 250px;
 }
 
 .getCurrentLocation {
   background-color: orange;
+  color: black;
   padding: 7px;
   width: 55px;
 }
@@ -88,13 +88,8 @@ img.loader { display: none; }
   display: none;
   // background-color: blue;
   margin: 0 auto;
-  padding: 0 $siteSpacing;
+  padding: 0 $siteSpacing $siteSpacing $siteSpacing;
   text-align: left;
-}
-
-#buttons {
-  margin: 0 auto 20px;
-  width: 90%;
 }
 
 #alert {
@@ -106,16 +101,23 @@ img.loader { display: none; }
 
 #waypoints {
   margin-bottom: 60px;
+}
 
-  .removeWaypoint { display: block; }
+#buttons button{
+  color: white;
+  font-weight: bold;
 }
 
 #calculateShares {
   background-color: #090;
-  float: right;
 }
 
 #addWaypoint {
   background-color: #009;
-  color: white;
+  margin-right: $siteSpacing;
+}
+
+#initialContent {
+  border-bottom: dashed 3px gray;
+  padding-bottom: $siteSpacing/2;
 }

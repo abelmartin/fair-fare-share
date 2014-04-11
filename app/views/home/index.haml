@@ -6,19 +6,18 @@
   %img{src: 'app_loader.gif'}
 
 #ready
-  #origin
+  #initialContent
+    #origin
 
-  %p
-    %label Final Fare
-    %input#finalFare{type: 'text', name: 'fare', value: '100.00'}
-
-  %hr
+    %p
+      %label Final Fare
+      %input#finalFare{type: 'text', name: 'fare', value: '100.00'}
 
   #waypoints
 
   #buttons
-    %button#calculateShares.fa.fa-usd Get Fair Share
     %button#addWaypoint.fa.fa-plus-square Add Cab Stop
+    %button#calculateShares.fa.fa-usd Get Fair Share
 
 %script#tmpWaypoint{type: 'txt/template'}
   %span.results ({{mileage}} miles, {{percentage}}%, ${{fareShare}})
