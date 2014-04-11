@@ -60,10 +60,9 @@ PageControlView = Backbone.View.extend
     'click #addWaypoint': 'addWaypoint'
     'click #calculateShares': 'calculateShares'
 
-  initialize: (options)->
+  initialize: (options) ->
     @geocoder = options.googleServices.geocoder
-    # @listentTo waypoints, 'add', @calculateShares
-    # @listentTo waypoints, 'remove', @calculateShares
+    @directionsService = options.googleServices.directionsService
 
   addWaypoint: ->
     console.log '#addWaypoint'
@@ -74,8 +73,8 @@ PageControlView = Backbone.View.extend
     console.log '#calculateShares'
     totalKM = 0
     fareFare = $('#finalFare').val()
-    origin = window.waypoints.find (waypoint) -> waypoint.get('origin') == true
-    dest = window.waypoints.last()
+    origin = waypoints.find (waypoint) -> waypoint.get('origin') == true
+    dest = waypoints.last()
 
     midpoints = waypoints.reject (rpoint) -> rpoint.get('origin') || rpoint.get('destination')
     legs = midpoints.map (mpoint) -> { location: mpoint.get('addressLatLng'), stopover: true }
@@ -91,15 +90,14 @@ PageControlView = Backbone.View.extend
 
     dirParams.waypoints = legs if legs.length > 0
 
-    console.log 'dirParams =>'
     console.log dirParams
 
-    gs.route dirParams, (resp, status) ->
+    @directionsService.route dirParams, (resp, status) ->
       console.log resp
       totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
 
       _.each resp.routes[0].legs, (leg, idx) ->
-        point = window.waypoints.models[idx+1]
+        point = waypoints.models[idx+1]
         prcnt = Math.round((leg.distance.value * 1.0 / totalKM) * 100)
         point.set
           mileage: leg.distance.text
@@ -205,6 +203,7 @@ WaypointView = Backbone.View.extend
     unless navigator.geolocation
       @$el.find('.getCurrentLocation').addClass('off')
 
+    $('input.address', @$el).focus()
     return @
 
 ### INSTANCE VARIABLES ###
