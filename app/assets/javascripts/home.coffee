@@ -181,12 +181,11 @@ WaypointView = Backbone.View.extend
       $('img.loader', @$el).hide()
 
   render: ->
-    if @model.get('origin')
-      @$el.html('<label> Starting Location </label>')
-    else
-      @$el.html('<label> Cab Stop </label>')
-
     @$el.append(_.template($(@template).html(), @model.attributes))
+    if @model.get('origin')
+      $('.addressInputControlHeader', @$el).prepend('<label> Starting Location </label>')
+    else
+      $('.addressInputControlHeader', @$el).prepend('<label> Cab Stop </label>')
     @$parent.append(@$el)
 
     unless navigator.geolocation

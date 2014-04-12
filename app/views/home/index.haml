@@ -10,7 +10,7 @@
     #origin
 
     %p
-      %label Final Fare
+      %label{style: 'display: block;'} Final Fare
       %input#finalFare{type: 'text', name: 'fare', value: '100.00'}
 
   #waypoints
@@ -20,10 +20,11 @@
     %button#calculateShares.fa.fa-usd Get Fair Share
 
 %script#tmpWaypoint{type: 'txt/template'}
-  %span.results ({{mileage}} miles, {{percentage}}%, ${{fareShare}})
-  %img.loader{src: 'waypoint_loader.gif'}
+  .addressInputControlHeader
+    %img.loader{src: 'waypoint_loader.gif'}
+    %span.results ({{mileage}} miles, {{percentage}}%, ${{fareShare}})
 
-  .addressInputControlls
+  .addressInputControls
     %input.address{type: 'text', value: '{{address}}'}
     %button.getCurrentLocation.fa.fa-compass
   %button.removeWaypoint.fa.fa-trash-o Remove
