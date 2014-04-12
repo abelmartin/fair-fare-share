@@ -93,7 +93,6 @@ PageControlView = Backbone.View.extend
           fareShare: Math.round(fareFare * (prcnt / 100) * 100) / 100
         point.trigger('shareCalculated')
 
-
 WaypointView = Backbone.View.extend
   className: 'waypoint'
 
@@ -125,23 +124,29 @@ WaypointView = Backbone.View.extend
     $('.results', @$el).html( newReport )
 
   getCurrentLocation: ->
+    $button = $('.getCurrentLocation', @$el)
     $('img.loader', @$el).show()
+
+    $button.prop('disabled', true)
 
     geoOptions =
       enableHighAccuracy: false
-      timeout: 5000
+      timeout: 3000
       maximumAge: 30000
 
     geoFail = (err) =>
       $('img.loader', @$el).hide()
       toaster.model.set {message: err.message}
+      toaster.model.trigger 'change:message'
+      $button.prop('disabled', false)
 
     geoSucess = (coordResponse) =>
       $('img.loader', @$el).hide()
       @model.set
         addressLatLng: new google.maps.LatLng(coordResponse.coords.latitude, coordResponse.coords.longitude)
+      $button.prop('disabled', false)
 
-    navigator.geolocation.getCurrentPosition geoSucess, geoFail, geoOptions
+    navigator.geolocation.getCurrentPosition( geoSucess, geoFail, geoOptions )
 
   keydownAddressUpdate: (e) ->
     if e.which == 13
@@ -169,6 +174,8 @@ WaypointView = Backbone.View.extend
         )
       else
         toaster.model.set {message: "Address Not Found: #{@model.get('address')}"}
+        toaster.model.trigger 'change:message'
+
 
       $('.address', @$el).val(@model.get('address'))
       $('img.loader', @$el).hide()
