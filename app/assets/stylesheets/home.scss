@@ -19,8 +19,11 @@ input[type='text'] {
 }
 
 h1 {
+  background: image-url('polonez_car.png');
+  border-bottom: solid 1px gray;
+  margin: 0;
+  padding: $siteSpacing;
   text-align: left;
-  margin-left: $siteSpacing;
 }
 
 button {
@@ -118,6 +121,6 @@ img.loader { display: none; }
 }
 
 #initialContent {
-  border-bottom: dashed 3px gray;
+  border-bottom: solid 2px gray;
   padding-bottom: $siteSpacing/2;
 }
