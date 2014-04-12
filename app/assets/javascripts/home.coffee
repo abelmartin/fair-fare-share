@@ -13,7 +13,7 @@ ToasterView = Backbone.View.extend
   el: '#alert'
 
   initialize: (options) ->
-    @model = new Backbone.Model({message: 'Please Choose 2 Or More Cab Stops'})
+    @model = new Backbone.Model()
     @listenTo( @model, 'change:message', @render )
 
   render: ->
@@ -67,11 +67,24 @@ PageControlView = Backbone.View.extend
   calculateShares: ->
     totalKM = 0
     fareFare = $('#finalFare').val()
-    origin = waypoints.find (waypoint) -> waypoint.get('origin') == true
+    origin = waypoints.find (waypoint) ->
+      waypoint.get('origin') == true && waypoint.get('addressLatLng')?
+
+    unless origin?
+      toaster.model.set({message: 'You must set a starting location'})
+      toaster.model.trigger('change:message')
+      return null
+
     dest = waypoints.last()
 
     midpoints = waypoints.reject (rpoint) -> rpoint.get('origin') || rpoint.get('destination')
     legs = midpoints.map (mpoint) -> { location: mpoint.get('addressLatLng'), stopover: true }
+
+    debugger
+    if midpoints.length == 0
+      toaster.model.set({message: 'Please Choose 2 Or More Cab Stops'})
+      toaster.model.trigger('change:message')
+      return null
 
     dirParams =
       origin: origin.get('addressLatLng')
