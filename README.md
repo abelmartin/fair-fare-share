@@ -1,1 +1,6 @@
-![screen shot 2014-04-11 at 1 03 45 am](https://cloud.githubusercontent.com/assets/29429/2676374/04265e8a-c137-11e3-9e82-4a6a8a2ab5c4.png)
+FFS is very much a work in progress with more features coming like...
+
+- Venmo integration to make getting payment easier.
+- A map showing the routes taken.
+
+Other feaures, if desired, should/will be added as issues to this repo :sunglasses:
