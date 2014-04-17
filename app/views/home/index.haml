@@ -14,6 +14,7 @@
       %input#finalFare{type: 'text', name: 'fare', value: '100.00'}
 
   #waypoints
+  #reports
 
   #buttons
     %button#addWaypoint.fa.fa-plus-square Add Cab Stop
@@ -22,8 +23,6 @@
 %script#tmpWaypoint{type: 'txt/template'}
   .addressInputControlHeader
     %img.loader{src: 'waypoint_loader.gif'}
-    %span.results ({{mileage}} miles, {{percentage}}%, ${{fareShare}})
-
   .addressInputControls
     %input.address{type: 'text', value: '{{address}}'}
     %button.getCurrentLocation.fa.fa-compass

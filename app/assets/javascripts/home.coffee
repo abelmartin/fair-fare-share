@@ -49,12 +49,32 @@ Waypoints = Backbone.Collection.extend
       lastPoint.set({destination: true}, {silent: true}) unless lastPoint.get('origin')
 
 
+ReportView = Backbone.View.extend
+  el: '#reports'
+
+  initialize: (options) ->
+    @listenTo waypoints, 'sharesCalculated', @render
+
+  render: ->
+    #clear what we have
+    @$el.empty()
+    newReports = []
+
+    #Add the elements to an array while building them from template
+    waypoints.each (wpoint) ->
+      newReports.push _.template( "<div class='report'> ({{mileage}} miles, {{percentage}}%, ${{fareShare}}) </div>", wpoint.attributes )
+
+    #A single insertion into the DOM is better than ittering the insertions
+    @$el.html( newReports )
+
 PageControlView = Backbone.View.extend
   el: '#buttons'
 
   events:
     'click #addWaypoint': 'addWaypoint'
     'click #calculateShares': 'calculateShares'
+    'click #viewWaypoints': 'viewWaypoints'
+    'click #viewMap': 'viewMap'
 
   initialize: (options) ->
     @geocoder = options.googleServices.geocoder
@@ -80,7 +100,6 @@ PageControlView = Backbone.View.extend
     midpoints = waypoints.reject (rpoint) -> rpoint.get('origin') || rpoint.get('destination')
     legs = midpoints.map (mpoint) -> { location: mpoint.get('addressLatLng'), stopover: true }
 
-    debugger
     if midpoints.length == 0
       toaster.model.set({message: 'Please Choose 2 Or More Cab Stops'})
       toaster.model.trigger('change:message')
@@ -89,10 +108,9 @@ PageControlView = Backbone.View.extend
     dirParams =
       origin: origin.get('addressLatLng')
       destination: dest.get('addressLatLng')
+      waypoints: legs
       optimizeWaypoints: false
       travelMode: google.maps.TravelMode.DRIVING
-
-    dirParams.waypoints = legs if legs.length > 0
 
     @directionsService.route dirParams, (resp, status) ->
       totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
@@ -104,7 +122,8 @@ PageControlView = Backbone.View.extend
           mileage: leg.distance.text
           percentage: prcnt
           fareShare: Math.round(fareFare * (prcnt / 100) * 100) / 100
-        point.trigger('shareCalculated')
+
+      waypoints.trigger('sharesCalculated')
 
 WaypointView = Backbone.View.extend
   className: 'waypoint'
@@ -125,16 +144,11 @@ WaypointView = Backbone.View.extend
 
     @listenTo(@model, 'change:address', @validateWaypoint)
     @listenTo(@model, 'change:addressLatLng', @validateWaypoint)
-    @listenTo(@model, 'shareCalculated', @updateReport)
     @render()
 
   removeView: ->
     waypoints.remove(@model)
     @remove()
-
-  updateReport: ->
-    newReport = _.template "({{mileage}} miles, {{percentage}}%, ${{fareShare}})", @model.attributes
-    $('.results', @$el).html( newReport )
 
   getCurrentLocation: ->
     $button = $('.getCurrentLocation', @$el)
@@ -220,6 +234,7 @@ originView = new WaypointView
 pageControlsView = new PageControlView
   el: '#buttons'
   googleServices: googleServices
+reportView = new ReportView()
 
 ### Everything's ready.  Let's show the form! ###
 $('#loading').hide()
