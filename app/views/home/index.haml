@@ -27,3 +27,7 @@
     %input.address{type: 'text', value: '{{address}}'}
     %button.getCurrentLocation.fa.fa-compass
   %button.removeWaypoint.fa.fa-trash-o Remove
+
+- content_for :bottom do
+  :coffee
+    $ -> FFS.start()

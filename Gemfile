@@ -5,8 +5,6 @@ gem 'rails', '4.0.4'
 gem 'pg'
 gem 'mysql2'
 
-# gem 'devise', '3.2.2'
-# gem 'protected_attributes'
 gem 'haml', '4.0.5'
 gem 'haml-rails', "0.5.3"
 
@@ -23,7 +21,6 @@ group :development do
 end
 
 group :test do
-  gem 'bazaar'
   gem 'ffaker'
   gem 'factory_girl'
   gem 'shoulda-matchers'
