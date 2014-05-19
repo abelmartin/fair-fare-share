@@ -7,15 +7,9 @@
   events:
     'click #addWaypoint': 'addWaypoint'
     'click #calculateShares': 'calculateShares'
-    'click #viewWaypoints': 'viewWaypoints'
-    'click #viewMap': 'viewMap'
+    # 'click #viewWaypoints': 'viewWaypoints'
+    # 'click #viewMap': 'viewMap'
 
-  initialize: (options) ->
-    @geocoder = options.googleServices.geocoder
-    @directionsService = options.googleServices.directionsService
-
-  addWaypoint: ->
-    new window.FFS.Views.WaypointView
-      geocoder: @geocoder
+  addWaypoint: -> new window.FFS.Views.WaypointView
 
   calculateShares: -> window.FFS.objs.waypoints.calculateShares()

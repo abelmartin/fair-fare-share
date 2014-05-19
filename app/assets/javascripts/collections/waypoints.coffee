@@ -40,7 +40,7 @@
       optimizeWaypoints: false
       travelMode: google.maps.TravelMode.DRIVING
 
-    @directionsService.route dirParams, (resp, status) ->
+    window.FFS.objs.googleServices.directionsService.route dirParams, (resp, status) ->
       totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
 
       _.each resp.routes[0].legs, (leg, idx) ->

@@ -14,7 +14,9 @@ toaster = new @FFS.Views.ToasterView()
 @FFS.removeFromCollection = (model) ->
   @objs.waypoints.remove(@model)
 
-@FFS.start = ->
+@FFS.start = (bootstrapData) ->
+  console.log(bootstrapData) if bootstrapData?
+
   #These are objects that should be instatiated once.
   @objs =
     googleServices: new @Lib.GoogleServices()
@@ -28,7 +30,6 @@ toaster = new @FFS.Views.ToasterView()
 
   new @Views.PageControlView
     el: '#buttons'
-    googleServices: @objs.googleServices
 
   new @Views.ReportView()
 

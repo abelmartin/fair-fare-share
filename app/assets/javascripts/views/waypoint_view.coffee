@@ -37,6 +37,7 @@
       $('img.loader', @$el).hide()
 
   keydownAddressUpdate: (e) ->
+    #Something like @$('input:focus')
     if e.which == 13
       @model.set({address: $('.address', @$el).val()})
 
