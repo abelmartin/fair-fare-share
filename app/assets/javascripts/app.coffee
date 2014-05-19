@@ -3,7 +3,10 @@ _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
 };
 
-@FFS ?= {}
+toaster = new @FFS.Views.ToasterView()
+
+@FFS.showToaster = (message) ->
+  toaster.model.set {message: message}
 
 @FFS.addToCollection = (model) ->
   @objs.waypoints.add model
@@ -12,11 +15,12 @@ _.templateSettings = {
   @objs.waypoints.remove(@model)
 
 @FFS.start = ->
+  #These are objects that should be instatiated once.
   @objs =
     googleServices: new @Lib.GoogleServices()
     waypoints: new @Collections.Waypoints()
-    toaster: new @Views.ToasterView()
 
+  #The first waypoint
   new @Views.WaypointView
     parent: $('#origin')
     geocoder: @objs.googleServices.geocoder
