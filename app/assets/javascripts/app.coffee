@@ -4,34 +4,37 @@ _.templateSettings = {
 };
 
 toaster = new @FFS.Views.ToasterView()
+waypoints = new @FFS.Collections.Waypoints()
 
 @FFS.showToaster = (message) ->
   toaster.model.set {message: message}
 
 @FFS.addToCollection = (model) ->
-  @objs.waypoints.add model
+  waypoints.add model
 
 @FFS.removeFromCollection = (model) ->
-  @objs.waypoints.remove(@model)
+  waypoints.remove(@model)
+
+@FFS.calculateShares = ->
+  waypoints.calculateShares( $('#finalFare').val() )
 
 @FFS.start = (bootstrapData) ->
-  console.log(bootstrapData) if bootstrapData?
+  if bootstrapData?
+    console.log(bootstrapData)
 
-  #These are objects that should be instatiated once.
-  @objs =
-    googleServices: new @Lib.GoogleServices()
-    waypoints: new @Collections.Waypoints()
+    waypoints = new @Collections.Waypoints(bootstrapData)
 
-  #The first waypoint
-  new @Views.WaypointView
-    parent: $('#origin')
-    geocoder: @objs.googleServices.geocoder
-    modelAttrs: {origin: true}
+    waypoints.each (point) -> point.validateWaypoint()
+    console.log(waypoints.first().attributes)
+  else
+    #The first waypoint
+    new @Views.WaypointView
+      parent: $('#origin')
+      modelAttrs: {origin: true}
 
-  new @Views.PageControlView
-    el: '#buttons'
+  new @Views.PageControlView({el: '#buttons'})
 
-  new @Views.ReportView()
+  new @Views.ReportView({waypoints: waypoints})
 
   ### Everything's ready.  Let's show the form! ###
   $('#loading').hide()

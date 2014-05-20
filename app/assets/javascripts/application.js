@@ -12,7 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree ./lib
+//= require googleapis-maps
+//= require underscore-min
+//= require backbone-min
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./views

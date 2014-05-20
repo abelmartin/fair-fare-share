@@ -1,6 +1,31 @@
 @FFS ?=  {}
 @FFS.Collections ?=  {}
 
+directionsService = new google.maps.DirectionsService()
+
+callDirectionsService = (totalFare, origin, destination, legs) ->
+  dirParams =
+    origin: origin.get('addressLatLng')
+    destination: destination.get('addressLatLng')
+    waypoints: legs
+    optimizeWaypoints: false
+    travelMode: google.maps.TravelMode.DRIVING
+
+  processResponse = (resp, status) =>
+    totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
+
+    _.each resp.routes[0].legs, (leg, idx) =>
+      point = @models[idx+1]
+      prcnt = Math.round((leg.distance.value * 1.0 / totalKM) * 100)
+      point.set
+        mileage: leg.distance.text
+        percentage: prcnt
+        fareShare: Math.round(totalFare * (prcnt / 100) * 100) / 100
+
+    @trigger('sharesCalculated')
+
+  directionsService.route dirParams, processResponse
+
 @FFS.Collections.Waypoints = Backbone.Collection.extend
   model: window.FFS.Models.Waypoint
 
@@ -14,9 +39,8 @@
       lastPoint = @last()
       lastPoint.set({destination: true}, {silent: true}) unless lastPoint.get('origin')
 
-  calculateShares: ->
+  calculateShares: (totalFare) ->
     totalKM = 0
-    fareFare = $('#finalFare').val()
     origin = @find (waypoint) ->
       waypoint.get('origin') == true && waypoint.get('addressLatLng')?
 
@@ -24,7 +48,7 @@
       window.FFS.showToaster 'You must set a starting location'
       return null
 
-    dest = @last()
+    destination = @last()
 
     midpoints = @reject (rpoint) -> rpoint.get('origin') || rpoint.get('destination')
     legs = midpoints.map (mpoint) -> { location: mpoint.get('addressLatLng'), stopover: true }
@@ -33,22 +57,4 @@
       window.FFS.showToaster 'Please Choose 2 Or More Cab Stops'
       return null
 
-    dirParams =
-      origin: origin.get('addressLatLng')
-      destination: dest.get('addressLatLng')
-      waypoints: legs
-      optimizeWaypoints: false
-      travelMode: google.maps.TravelMode.DRIVING
-
-    window.FFS.objs.googleServices.directionsService.route dirParams, (resp, status) ->
-      totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
-
-      _.each resp.routes[0].legs, (leg, idx) ->
-        point = @models[idx+1]
-        prcnt = Math.round((leg.distance.value * 1.0 / totalKM) * 100)
-        point.set
-          mileage: leg.distance.text
-          percentage: prcnt
-          fareShare: Math.round(fareFare * (prcnt / 100) * 100) / 100
-
-      @trigger('sharesCalculated')
+    callDirectionsService.apply(@, [totalFare, origin, destination, legs])

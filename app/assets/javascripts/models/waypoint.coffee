@@ -1,6 +1,8 @@
 @FFS ?=  {}
 @FFS.Models ?=  {}
 
+geocoder = new google.maps.Geocoder()
+
 @FFS.Models.Waypoint = Backbone.Model.extend
   defaults:
     address: ''
@@ -38,8 +40,7 @@
     else
       geoParam = {address: @get('address')}
 
-    #This is gross. :-( Seems like creating geocoder objects would be better
-    window.FFS.objs.googleServices.geocoder.geocode geoParam, (data, status) =>
+    geocoder.geocode geoParam, (data, status) =>
       $('img.loader', @$el).show()
 
       foundLoc = _.find data, (result) ->
@@ -54,4 +55,4 @@
       else
         window.FFS.showToaster "Address Not Found: #{@get('address')}"
 
-      callback()
+      callback() if callback
