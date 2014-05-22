@@ -1,9 +1,12 @@
 @FFS ?=  {}
 @FFS.Collections ?=  {}
 
+#By instantiating the directionsService here, it gets closed over and
+#behaves a little like a singleton :-)
 directionsService = new google.maps.DirectionsService()
 
-callDirectionsService = (totalFare, origin, destination, legs) ->
+#Extracting this method out allows us to test correctly.
+callDirectionsService = (origin, destination, legs) ->
   dirParams =
     origin: origin.get('addressLatLng')
     destination: destination.get('addressLatLng')
@@ -11,7 +14,14 @@ callDirectionsService = (totalFare, origin, destination, legs) ->
     optimizeWaypoints: false
     travelMode: google.maps.TravelMode.DRIVING
 
-  processResponse = (resp, status) =>
+  directionsService.route dirParams, (resp, status) =>
+    @_processResponse.apply(@, [resp, status])
+
+@FFS.Collections.Waypoints = Backbone.Collection.extend
+  model: window.FFS.Models.Waypoint
+  totalFare: 0
+
+  _processResponse: (resp, status) ->
     totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
 
     _.each resp.routes[0].legs, (leg, idx) =>
@@ -20,14 +30,9 @@ callDirectionsService = (totalFare, origin, destination, legs) ->
       point.set
         mileage: leg.distance.text
         percentage: prcnt
-        fareShare: Math.round(totalFare * (prcnt / 100) * 100) / 100
+        fareShare: Math.round(@totalFare * (prcnt / 100) * 100) / 100
 
     @trigger('sharesCalculated')
-
-  directionsService.route dirParams, processResponse
-
-@FFS.Collections.Waypoints = Backbone.Collection.extend
-  model: window.FFS.Models.Waypoint
 
   initialize: ->
     @on 'add', (waypoint) ->
@@ -41,6 +46,7 @@ callDirectionsService = (totalFare, origin, destination, legs) ->
 
   calculateShares: (totalFare) ->
     totalKM = 0
+    @totalFare = totalFare
     origin = @find (waypoint) ->
       waypoint.get('origin') == true && waypoint.get('addressLatLng')?
 
@@ -57,4 +63,4 @@ callDirectionsService = (totalFare, origin, destination, legs) ->
       window.FFS.showToaster 'Please Choose 2 Or More Cab Stops'
       return null
 
-    callDirectionsService.apply(@, [totalFare, origin, destination, legs])
+    callDirectionsService.apply(@, [origin, destination, legs])
