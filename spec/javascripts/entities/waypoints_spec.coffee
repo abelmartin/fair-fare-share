@@ -44,8 +44,8 @@ describe 'Waypoints', ->
         GoogleResponses.directions.success.status
       )
 
-      expect(waypoints.models[1].get('percentage')).toBe(25)
-      expect(waypoints.models[2].get('percentage')).toBe(35)
+      expect(waypoints.models[1].get('percentage')).toBe(21)
+      expect(waypoints.models[2].get('percentage')).toBe(39)
       expect(waypoints.models[3].get('percentage')).toBe(40)
 
     it 'assigns expected share to models', ->
@@ -54,9 +54,13 @@ describe 'Waypoints', ->
         GoogleResponses.directions.success.status
       )
 
-      expect(waypoints.models[1].get('fareShare')).toBe(25.00)
-      expect(waypoints.models[2].get('fareShare')).toBe(35.00)
-      expect(waypoints.models[3].get('fareShare')).toBe(40.00)
+      # expect(waypoints.models[1].get('fareShare')).toBe(21.00)
+      # expect(waypoints.models[2].get('fareShare')).toBe(39.00)
+      # expect(waypoints.models[3].get('fareShare')).toBe(40.00)
+
+      expect(waypoints.models[1].get('fareShare')).toBe(7.00)
+      expect(waypoints.models[2].get('fareShare')).toBe(26.50)
+      expect(waypoints.models[3].get('fareShare')).toBe(66.50)
 
     it 'assigns expected mileage to models', ->
       waypoints._processResponse(

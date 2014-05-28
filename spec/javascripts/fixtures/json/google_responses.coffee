@@ -7,8 +7,8 @@ window.GoogleResponses =
       responseText:
         routes: [
           legs: [
-            { distance: {value: 2500, text: 'bar mi'} }
-            { distance: {value: 3500, text: 'gaz mi'} }
+            { distance: {value: 2100, text: 'bar mi'} }
+            { distance: {value: 3900, text: 'gaz mi'} }
             { distance: {value: 4000, text: 'qat mi'} }
           ]
         ]

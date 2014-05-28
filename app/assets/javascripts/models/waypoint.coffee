@@ -8,7 +8,7 @@ geocoder = new google.maps.Geocoder()
     address: ''
     addressLatLng: null
     addressVerified: false
-    fareShare: 'zzz'
+    fareShare: 0
     mileage: 'xxx'
     percentage: 'yyy'
     origin: false

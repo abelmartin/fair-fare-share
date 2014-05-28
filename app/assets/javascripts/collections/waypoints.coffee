@@ -24,13 +24,25 @@ callDirectionsService = (origin, destination, legs) ->
   _processResponse: (resp, status) ->
     totalKM = _.reduce resp.routes[0].legs, ((memo, leg) -> memo + leg.distance.value), 0
 
+    fareHolder = []
     _.each resp.routes[0].legs, (leg, idx) =>
-      point = @models[idx+1]
+      wpointIdx = idx+1
+      point = @models[wpointIdx]
+      occupancy = @length - wpointIdx
+
+
       prcnt = Math.round((leg.distance.value * 1.0 / totalKM) * 100)
+      stop_cost = Math.round(@totalFare * (prcnt / 100) * 100) / 100
+
+      stop_cost = (stop_cost / occupancy)
+
       point.set
         mileage: leg.distance.text
         percentage: prcnt
-        fareShare: Math.round(@totalFare * (prcnt / 100) * 100) / 100
+        # fareShare: stop_cost
+
+      for n in [wpointIdx...@length] by 1
+        @models[n].set({ fareShare: @models[n].get('fareShare') + stop_cost })
 
     @trigger('sharesCalculated')
 
