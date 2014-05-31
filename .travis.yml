@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - "2.1.0"
+
+script:
+  - bundle exec rspec
+  - bundle exec teaspoon
+
+# before_script:
+#   - mysql -e 'create database pull_req_test;'
+#   - cp config/database_example.yml config/database.yml
