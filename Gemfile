@@ -15,6 +15,7 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'httparty'
 gem 'compass-rails'
+gem 'rake', '10.3.1'
 
 group :development do
   gem 'quiet_assets'

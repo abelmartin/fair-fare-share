@@ -25,6 +25,7 @@ waypoints = new @FFS.Collections.Waypoints()
     waypoints = new @Collections.Waypoints(bootstrapData)
 
     waypoints.each (point) -> point.validateWaypoint()
+    window.waypoints = waypoints
     console.log(waypoints.first().attributes)
   else
     #The first waypoint

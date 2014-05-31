@@ -54,13 +54,9 @@ describe 'Waypoints', ->
         GoogleResponses.directions.success.status
       )
 
-      # expect(waypoints.models[1].get('fareShare')).toBe(21.00)
-      # expect(waypoints.models[2].get('fareShare')).toBe(39.00)
-      # expect(waypoints.models[3].get('fareShare')).toBe(40.00)
-
-      expect(waypoints.models[1].get('fareShare')).toBe(7.00)
-      expect(waypoints.models[2].get('fareShare')).toBe(26.50)
-      expect(waypoints.models[3].get('fareShare')).toBe(66.50)
+      expect(waypoints.models[1].get('fareShareString')).toBe("7.00")
+      expect(waypoints.models[2].get('fareShareString')).toBe("26.50")
+      expect(waypoints.models[3].get('fareShareString')).toBe("66.50")
 
     it 'assigns expected mileage to models', ->
       waypoints._processResponse(
