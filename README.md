@@ -37,6 +37,7 @@ FFS...
 # Roadmap
 FFS is very much a work in progress with more features coming like...
 
+- WIP: Removing the ugly blue report box :sweat_smile:
 - Auto fare calculations assuming perfect traffic conditions.
 - A map showing the routes taken. (It's good to see what routes are assumed)
 - Adding time taken between stops.  (Following the perfect route doesn't take traffic into account)
