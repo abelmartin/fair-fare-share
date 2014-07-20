@@ -4,6 +4,10 @@ $inputWidth: 75%;
 @import "compass/css3";
 @import "compass/utilities";
 
+@media (min-width: 600px) {
+  * { font-size: 1.1em; }
+}
+
 html { text-align: center; }
 
 input[type='text'] {
@@ -21,10 +25,10 @@ h1 {
   margin: 0;
   padding: $siteSpacing * 2;
   text-align: left;
-}
 
-@media (max-width: 600px){
-  h1 { text-align: center; }
+  @media (max-width: 600px){
+    & { text-align: center; }
+  }
 }
 
 button {
@@ -38,6 +42,11 @@ button {
 
 .addressInputControls {
   input, button { vertical-align: top; }
+}
+
+.app_loader {
+  height: 256px;
+  width: 256px;
 }
 
 .waypoint {
@@ -66,7 +75,6 @@ button {
 
 .getCurrentLocation {
   background-color: purple;
-  // color: black;
   padding: 2px;
   width: 55px;
 
@@ -78,7 +86,11 @@ button {
   &.off { display: none; }
 }
 
-img.loader { display: none; }
+img.loader {
+  display: none;
+  height: 15px;
+  width: 100px;
+}
 
 #origin {
   .results, .removeWaypoint { display: none; }
