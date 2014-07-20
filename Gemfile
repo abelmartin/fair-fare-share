@@ -35,4 +35,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'webmock'
+  gem 'phantomjs'
 end
