@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 ruby '2.1.2'
 
 gem 'rails', '4.1.4'
-gem 'sqlite3'
 gem 'sass-rails'
 gem 'haml-rails'
 gem 'uglifier', '>= 1.3.0'
@@ -14,6 +13,7 @@ gem 'httparty'
 gem 'spring',        group: :development
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rspec-rails'
