@@ -3,7 +3,7 @@
 
 #loading
   %h2 Loading
-  %img{src: 'app_loader.gif'}
+  %img{src: image_url('app_loader.gif')}
 
 #ready
   #initialContent
@@ -22,7 +22,7 @@
 
 %script#tmpWaypoint{type: 'txt/template'}
   .addressInputControlHeader
-    %img.loader{src: 'waypoint_loader.gif'}
+    %img.loader{src: image_url('waypoint_loader.gif')}
   .addressInputControls
     %input.address{type: 'text', value: '{{address}}'}
     %button.getCurrentLocation.fa.fa-compass
