@@ -1,13 +1,10 @@
-$siteSpacing: 30px;
-$inputWidth: 80%;
+$siteSpacing: 15px;
+$inputWidth: 75%;
 
 @import "compass/css3";
 @import "compass/utilities";
 
-html {
-  font-size: 2em;
-  text-align: center;
-}
+html { text-align: center; }
 
 input[type='text'] {
   // display: block;
@@ -22,17 +19,21 @@ h1 {
   background: image-url('polonez_car.png');
   border-bottom: solid 1px gray;
   margin: 0;
-  padding: $siteSpacing;
+  padding: $siteSpacing * 2;
   text-align: left;
+}
+
+@media (max-width: 600px){
+  h1 { text-align: center; }
 }
 
 button {
   @include border-radius(25px);
   @include single-box-shadow;
 
-  font-size: .75em;
   border: 1px solid gray;
-  padding: 15px;
+  color: white;
+  padding: 5px;
 }
 
 .addressInputControls {
@@ -43,11 +44,9 @@ button {
   margin-top: 1.25em;
 }
 
-.fa:before { padding-right: 10px; }
+.fa:before { padding-right: 5px; }
 
 .fa.fa-compass:before{ padding-right: 0; }
-
-.results { font-size: .85em; }
 
 .found {
   background-color: #BFB;
@@ -59,25 +58,24 @@ button {
   border: solid 2px #B00;
 }
 
-.getCurrentLocation.off { display: none; }
-
-button.removeWaypoint{
+.removeWaypoint{
   background-color: #900;
-  color: white;
   font-weight: bold;
   margin: 10px auto 0;
 }
 
 .getCurrentLocation {
-  background-color: orange;
-  color: black;
-  padding: 7px;
+  background-color: purple;
+  // color: black;
+  padding: 2px;
   width: 55px;
 
   &[disabled] {
     @include box-shadow(blue 0 0 0);
     background-color: gray;
   }
+
+  &.off { display: none; }
 }
 
 img.loader { display: none; }
@@ -107,18 +105,14 @@ img.loader { display: none; }
   margin-bottom: 60px;
 }
 
-#buttons button{
-  color: white;
-  font-weight: bold;
-}
-
 #calculateShares {
   background-color: #090;
+  float: right;
 }
 
 #addWaypoint {
   background-color: #009;
-  margin-right: $siteSpacing;
+  // margin-right: $siteSpacing/2;
 }
 
 #initialContent {
