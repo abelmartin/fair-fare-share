@@ -5,6 +5,5 @@ rvm:
 script:
   - bundle exec teaspoon
 
-# before_script:
-#   - mysql -e 'create database pull_req_test;'
-#   - cp config/database_example.yml config/database.yml
+before_script:
+  - cp config/database_example.yml config/database.yml
