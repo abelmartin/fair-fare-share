@@ -105,8 +105,18 @@ img.loader {
 @media (max-width: 600px){
   #intro{
     margin: $siteSpacing auto 0 auto;
-    width: 200px;
+    width: 225px;
     text-align: center;
+  }
+}
+
+#visit-on-mobile-web {
+  font-size: 1em;
+}
+
+@media (max-width: 600px){
+  #visit-on-mobile-web {
+    display: none;
   }
 }
 

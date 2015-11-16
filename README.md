@@ -1,7 +1,7 @@
 # Introduction
 At the end night with friends, taking a cab is common.
 
-This [Gothamist article](http://gothamist.com/2005/12/09/_the_economics.php) summarizes this [WSJ article's split strategies](http://online.wsj.com/news/articles/SB113279169439805647) well.
+This [Gothamist article](http://gothamist.com/2005/12/09/_the_economics.php) summarizes this [WSJ article's split strategies](http://online.wsj.com/news/articles/SB113279169439805647) well:
 
 - trip-leg
 - proportional-savings
