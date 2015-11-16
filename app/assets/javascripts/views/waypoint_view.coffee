@@ -51,7 +51,12 @@
   render: ->
     @$el.append(_.template($(@template).html(), @model.attributes))
     if @model.get('origin')
-      $('.addressInputControlHeader', @$el).prepend('<label> Starting Location </label>')
+      $('.addressInputControlHeader', @$el).prepend(
+          '<span class="be-persistant">If needed, try the location button multiple times.</span>'
+        ).prepend(
+          '<label> Starting Location </label>'
+        )
+
     else
       $('.addressInputControlHeader', @$el).prepend('<label> Cab Stop </label>')
     @$parent.append(@$el)

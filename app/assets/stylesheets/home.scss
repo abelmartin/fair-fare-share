@@ -23,7 +23,7 @@ h1 {
   background: image-url('polonez_car.png');
   border-bottom: solid 1px gray;
   margin: 0;
-  padding: $siteSpacing * 2;
+  padding: ($siteSpacing * 2) $siteSpacing;
   text-align: left;
 
   @media (max-width: 600px){
@@ -86,10 +86,28 @@ button {
   &.off { display: none; }
 }
 
+.be-persistant {
+  display: block;
+  font-size: 11px;
+}
+
 img.loader {
   display: none;
   height: 15px;
   width: 100px;
+}
+
+#intro{
+  text-align: left;
+  margin-left: $siteSpacing;
+}
+
+@media (max-width: 600px){
+  #intro{
+    margin: $siteSpacing auto 0 auto;
+    width: 200px;
+    text-align: center;
+  }
 }
 
 #origin {
@@ -114,7 +132,7 @@ img.loader {
 }
 
 #waypoints {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 #calculateShares {
@@ -124,7 +142,6 @@ img.loader {
 
 #addWaypoint {
   background-color: #009;
-  // margin-right: $siteSpacing/2;
 }
 
 #initialContent {
@@ -134,4 +151,8 @@ img.loader {
 
 #reports {
   border: solid 5px blue;
+  &:empty {
+    display: none;
+    margin-bottom: 20px;
+  }
 }

@@ -1,5 +1,9 @@
 #alert.not_found
 %h1 Fare Fair Share
+%p#intro
+  A fair way to split a cab ride using a
+  %a{href: 'http://gothamist.com/2005/12/09/_the_economics.php', target: '_blank'} trip-leg
+  algo.
 
 #loading
   %h2 Loading
@@ -17,15 +21,15 @@
   #reports
 
   #buttons
-    %button#calculateShares.fa.fa-usd Get Shares
-    %button#addWaypoint.fa.fa-plus-square Add Stop
+    %button#calculateShares.fa.fa-money Get Shares
+    %button#addWaypoint.fa.fa-plus-circle Add Stop
 
 %script#tmpWaypoint{type: 'txt/template'}
   .addressInputControlHeader
     %img.loader{src: image_url('waypoint_loader.gif')}
   .addressInputControls
     %input.address{type: 'text', value: '{{address}}'}
-    %button.getCurrentLocation.fa.fa-compass
+    %button.getCurrentLocation.fa.fa-map-marker
   %button.removeWaypoint.fa.fa-trash-o Remove
 
 %script#tmpReport{type: 'txt/template'}
