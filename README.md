@@ -8,15 +8,15 @@ This [Gothamist article](http://gothamist.com/2005/12/09/_the_economics.php) sum
 - game-theories
 - Talmudic
 
-My friends and I don't do any of this.  Typically, we split the fare by the number of humans in the car using drunk approximations of distance & cost.
+My friends and I don't do any of this.  Typically, we split the fare by the number of humans in the car along with drunk approximations of distance & cost.
 
-Is our 'drunk-math' method fair?  No, not really :sweat_smile: The 'trip-leg' strategy sounds like an awesome replacement.  Every time the cab stops, all riders in the cab split the cost up to that point.
+Is it fair?  Well, sorta :sweat_smile: ... but the 'trip-leg' strategy sounds like an awesome replacement.  Every time the cab stops, all riders in the cab split the cost up to that point.
 
 Let's assume **A**lan, **B**eth & **C**arl take a cab where the total cab fare was $100:
 
  - At Alan's stop, 30% of the trip, the fair => $30 / 3 => A,B, & C contribute $10 to the 'pot' -- OR -- Alan pays $5 to both Beth & Carl
  - At Beth's stop, 50% of the trip, the fair => $50 / 2 => B & C contribute $25 to the 'pot' -- OR -- Beth pays Carl $40 after getting $5 from Alan
- - At Carl's stop, 20% of the trip, the fair => $20 / 1 => C delivers contribution pot -- OR -- Carl pays $100 after getting $5 from Alan & $40 from Beth
+ - At Carl's stop, 20% of the trip, the fair => $20 / 1 => C delivers the pot & his final contribution of $20 -- OR -- Carl pays $100 after getting $5 from Alan & $40 from Beth
 
 ...with final totals of:
 - Alan paying $10 instead of $30 by himself
